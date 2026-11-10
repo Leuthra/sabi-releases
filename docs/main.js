@@ -166,6 +166,7 @@ function setupFilters() {
 
   const show = (group, { animate = true } = {}) => {
     const state = animate && window.Flip ? Flip.getState(cards) : null;
+    const heightBefore = grid.offsetHeight;
     let shown = 0;
     for (const card of cards) {
       const visible = group === "semua" || card.dataset.group === group;
@@ -179,13 +180,30 @@ function setupFilters() {
     }
     if (count) count.textContent = `${shown} fitur`;
     if (state && prefersMotion()) {
+      // While the cards fly, they are taken out of the layout, which would
+      // collapse the grid and pull the next section up over them. The grid
+      // keeps its old height and eases to the new one instead.
+      const heightAfter = grid.offsetHeight;
+      gsap.fromTo(
+        grid,
+        { height: heightBefore },
+        {
+          height: heightAfter,
+          duration: 0.55,
+          ease: "power3.inOut",
+          overwrite: true,
+          onComplete: () => {
+            gsap.set(grid, { clearProps: "height" });
+            remeasure();
+          },
+        },
+      );
       // Cards slide to their new places; the ones coming in grow from small.
       Flip.from(state, {
         duration: 0.55,
         ease: "power3.inOut",
         absolute: true,
         stagger: 0.012,
-        onComplete: remeasure,
         onEnter: (entering) =>
           gsap.fromTo(entering, { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.4 }),
         onLeave: (leaving) => gsap.to(leaving, { autoAlpha: 0, scale: 0.85, duration: 0.3 }),
