@@ -1,0 +1,786 @@
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("fonts/PlusJakartaSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("fonts/PlusJakartaSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("fonts/PlusJakartaSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("fonts/PlusJakartaSans-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-display: swap;
+}
+
+/* Sabi's own palette, and the sky of each moment of the day from the
+   app's home screen. The sky variables are animated as the page scrolls. */
+:root {
+  --langit: #1b1d3a;
+  --bulan: #ffe39a;
+  --kabut: #eceef6;
+  --nila: #4f56c6;
+  --nila-terang: #8f95ef;
+  --sheet: rgba(27, 29, 58, 0.86);
+  --line: rgba(236, 238, 246, 0.14);
+  --muted: rgba(236, 238, 246, 0.72);
+
+  --sky-top: #1e2350;
+  --sky-mid: #4b4e9a;
+  --sky-low: #c98a8e;
+  --stars: 1;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3125rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2rem, 4.2vw, 3rem);
+  --step-4: clamp(2.6rem, 7vw, 5.25rem);
+  --radius-sheet: 28px;
+  --radius-small: 14px;
+  --content: 72rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  color: var(--kabut);
+  background: var(--langit);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--bulan);
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--bulan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--step-3);
+  font-weight: 800;
+}
+
+h3 {
+  font-size: var(--step-1);
+  font-weight: 700;
+}
+
+p {
+  margin: 0;
+}
+
+/* The sky behind the whole page. */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    var(--sky-top) 0%,
+    var(--sky-mid) 55%,
+    var(--sky-low) 100%
+  );
+}
+
+.stars {
+  position: absolute;
+  inset: 0 0 35% 0;
+  opacity: var(--stars);
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Header */
+.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem clamp(1rem, 4vw, 2.5rem);
+  background: linear-gradient(to bottom, rgba(12, 13, 34, 0.55), transparent);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--kabut);
+  font-weight: 800;
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+
+.top nav {
+  display: flex;
+  gap: clamp(0.8rem, 2.5vw, 1.8rem);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.top nav a {
+  color: var(--kabut);
+  text-decoration: none;
+}
+
+.top nav a:hover {
+  color: var(--bulan);
+}
+
+.top .nav-download {
+  color: var(--langit);
+  background: var(--bulan);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+}
+
+.top .nav-download:hover {
+  color: var(--langit);
+}
+
+/* Hero */
+.hero {
+  min-height: 100svh;
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: 7rem clamp(1.25rem, 5vw, 3rem) 4rem;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hero h1 {
+  font-size: var(--step-4);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 12ch;
+}
+
+.lead {
+  margin-top: 1.5rem;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--kabut);
+  max-width: 34ch;
+}
+
+.hero-actions {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.6rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.1rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  background: var(--bulan);
+  color: var(--langit);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(255, 227, 154, 0.7);
+}
+
+.button-quiet {
+  background: transparent;
+  color: var(--kabut);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+}
+
+.button-quiet:hover {
+  box-shadow: inset 0 0 0 1.5px var(--kabut);
+}
+
+.link {
+  color: var(--kabut);
+  font-weight: 600;
+}
+
+.fineprint {
+  margin-top: 1rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.hero-moon {
+  display: grid;
+  place-items: center;
+}
+
+.hero-sabi {
+  width: min(22rem, 70vw);
+  filter: drop-shadow(0 0 60px rgba(255, 227, 154, 0.45));
+}
+
+/* The day: a sticky sky window with the arc and clock, and panels that
+   scroll past it like the content sheet of the app's home screen. */
+.day {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.day-sky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.arc {
+  width: 100%;
+  max-width: 26rem;
+  overflow: visible;
+}
+
+.arc path {
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 2;
+  stroke-dasharray: 2 7;
+  stroke-linecap: round;
+}
+
+.arc-dot {
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+.arc-sabi {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4.5rem;
+  filter: drop-shadow(0 0 24px rgba(255, 227, 154, 0.6));
+  will-change: transform;
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.clock-time {
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-label {
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.day-panels {
+  padding: 30svh 0 20svh;
+  display: flex;
+  flex-direction: column;
+  gap: 40svh;
+}
+
+.panel {
+  background: var(--sheet);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius-sheet);
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.panel h2 {
+  font-size: var(--step-2);
+  max-width: 20ch;
+}
+
+.panel > p {
+  margin-top: 0.9rem;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.panel ul {
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.panel li {
+  position: relative;
+  padding-left: 1.5rem;
+  max-width: 60ch;
+}
+
+/* A small crescent instead of a bullet. */
+.panel li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  box-shadow: -3px 0 0 0 var(--bulan);
+  transform: translateX(3px);
+}
+
+.shot {
+  margin: 1.6rem 0 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--line);
+  max-width: 24rem;
+}
+
+.shot-stack {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.shot-stack .shot {
+  margin: 0;
+}
+
+/* Product cards rebuilt in HTML for features without a screenshot. */
+.mock {
+  margin-top: 1.6rem;
+  max-width: 24rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 20px;
+  background: #23264a;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.mock-title {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.mock-big {
+  font-size: var(--step-1);
+  font-weight: 800;
+  margin-top: 0.2rem;
+}
+
+.mock-sub {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+.mock-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.mock-count {
+  margin-left: auto;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.tick {
+  flex: none;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 2px var(--muted);
+}
+
+.tick.done {
+  background: var(--bulan);
+  box-shadow: none;
+  position: relative;
+}
+
+.tick.done::after {
+  content: "";
+  position: absolute;
+  left: 0.42rem;
+  top: 0.18rem;
+  width: 0.35rem;
+  height: 0.7rem;
+  border: solid var(--langit);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.tick.part {
+  border-radius: 50%;
+  background: conic-gradient(var(--bulan) 0 75%, transparent 75%);
+  box-shadow: inset 0 0 0 2px var(--bulan);
+}
+
+.island {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+  border-radius: 999px;
+  background: #0c0d22;
+  font-size: var(--step--1);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.bar {
+  margin-top: 0.8rem;
+  height: 8px;
+  border-radius: 8px;
+  background: rgba(236, 238, 246, 0.14);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  width: 32%;
+  border-radius: 8px;
+  background: var(--bulan);
+}
+
+/* Sections after the day, on the night sky. */
+.packs,
+.privacy,
+.sources,
+.install,
+.changelog {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 5vw, 3rem) 0;
+}
+
+.section-lead {
+  margin-top: 0.8rem;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.pack-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.pack {
+  padding: 1.5rem 1.5rem 0 0;
+}
+
+.pack + .pack {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--line);
+}
+
+.pack p,
+.privacy-cols p {
+  margin-top: 0.6rem;
+  color: var(--muted);
+}
+
+.privacy-cols {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.table-wrap {
+  margin-top: 2rem;
+  overflow-x: auto;
+  border-radius: var(--radius-small);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  min-width: 44rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  font-weight: 700;
+  color: var(--bulan);
+  background: rgba(12, 13, 34, 0.5);
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+td:first-child {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.steps {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: 1.8rem;
+}
+
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 3.6rem;
+}
+
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -0.2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bulan);
+  color: var(--langit);
+  font-weight: 800;
+}
+
+.steps p {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.download-row {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.install-notes {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 0.8rem;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.fingerprint {
+  display: block;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-small);
+  background: rgba(12, 13, 34, 0.6);
+  color: var(--kabut);
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.changelog-body {
+  margin-top: 1.5rem;
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+.changelog-body ul {
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.foot {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: 5rem clamp(1.25rem, 5vw, 3rem) 3rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+  display: grid;
+  gap: 0.3rem;
+}
+
+/* Phones: the sky window becomes a band at the top while the day scrolls. */
+@media (max-width: 52rem) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 6rem;
+    text-align: left;
+  }
+
+  .hero-moon {
+    order: -1;
+    justify-items: start;
+  }
+
+  .hero-sabi {
+    width: 9rem;
+  }
+
+  .day {
+    grid-template-columns: 1fr;
+  }
+
+  .day-sky {
+    height: 34svh;
+    z-index: 1;
+    padding-top: 3.5rem;
+    gap: 0.2rem;
+  }
+
+  .arc {
+    max-width: 15rem;
+  }
+
+  .arc-sabi {
+    width: 2.75rem;
+  }
+
+  .clock {
+    margin-top: 0;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  .clock-time {
+    font-size: 2.5rem;
+  }
+
+  .day-panels {
+    padding-top: 4svh;
+    gap: 22svh;
+  }
+
+  .pack-grid,
+  .privacy-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .pack,
+  .pack + .pack {
+    padding: 1.4rem 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .button {
+    transition: none;
+  }
+}
+
+.island-text {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+@media (max-width: 52rem) {
+  /* The band covers the panels scrolling beneath it with the same sky. */
+  .day-sky {
+    margin: 0 calc(-1 * clamp(1.25rem, 5vw, 3rem));
+    background: linear-gradient(to bottom, var(--sky-top), var(--sky-mid) 85%, transparent);
+  }
+}
+
+/* Once the page scrolls, the header gets its own night backdrop so text
+   passing beneath it stays out of the way. */
+.top {
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.top.is-scrolled {
+  background: rgba(12, 13, 34, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}

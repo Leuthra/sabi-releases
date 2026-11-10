@@ -5,7 +5,10 @@ harimu: jadwal sholat dan pengingat ibadah, habit, gym, waktu layar,
 gempa dan cuaca dari BMKG, dan lainnya. Semua datamu tersimpan di HP-mu
 sendiri, tanpa akun.
 
-Repositori ini hanya berisi file APK. Kode sumbernya private.
+Situs: https://leuthra.github.io/sabi-releases/
+
+Repositori ini berisi file APK dan situs Sabi (folder `docs`). Kode
+sumber aplikasinya private.
 
 ## Memasang
 

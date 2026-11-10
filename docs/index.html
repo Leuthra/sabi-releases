@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sabi, teman kecil pengatur harimu</title>
+  <meta name="description" content="Aplikasi Android gratis untuk jadwal sholat, habit, gym, dan waktu layar. Tanpa akun, semua data tersimpan di HP-mu.">
+  <meta name="theme-color" content="#1B1D3A">
+  <meta property="og:title" content="Sabi, teman kecil pengatur harimu">
+  <meta property="og:description" content="Jadwal sholat, habit, gym, dan waktu layar dalam satu aplikasi Android. Tanpa akun, semua data di HP-mu.">
+  <meta property="og:image" content="https://leuthra.github.io/sabi-releases/img/sabi.webp">
+  <link rel="icon" href="img/sabi.webp" type="image/webp">
+  <link rel="preload" href="fonts/PlusJakartaSans-ExtraBold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="stars"></div>
+  </div>
+
+  <header class="top">
+    <a class="brand" href="#awal">
+      <img src="img/sabi.webp" alt="" width="28" height="28">
+      <span>Sabi</span>
+    </a>
+    <nav aria-label="Navigasi utama">
+      <a href="#hari">Fitur</a>
+      <a href="#data">Sumber data</a>
+      <a href="#pasang" class="nav-download">Unduh</a>
+    </nav>
+  </header>
+
+  <main id="awal">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <h1 id="hero-title">Teman kecil pengatur harimu.</h1>
+        <p class="lead">
+          Jadwal sholat, habit, gym, dan waktu layar dalam satu aplikasi
+          Android. Tanpa akun, dan semua datamu tetap di HP.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#pasang" data-download="arm64-v8a">
+            <span data-download-label>Unduh Sabi untuk Android</span>
+          </a>
+          <a class="link" href="#hari">Lihat harinya bersama Sabi</a>
+        </div>
+        <p class="fineprint" data-release-meta>Gratis dan tanpa iklan. Android 7.0 ke atas.</p>
+      </div>
+      <div class="hero-moon">
+        <img class="hero-sabi" src="img/sabi.webp" alt="Sabi, maskot bulan sabit yang tersenyum" width="320" height="320">
+      </div>
+    </section>
+
+    <section id="hari" class="day" aria-label="Satu hari bersama Sabi">
+      <div class="day-sky" aria-hidden="true">
+        <svg class="arc" viewBox="0 0 400 180" preserveAspectRatio="xMidYMid meet">
+          <path id="arc-path" d="M 20 160 Q 200 -40 380 160" fill="none"/>
+          <circle class="arc-dot" cx="20" cy="160" r="4"/>
+          <circle class="arc-dot" cx="110" cy="66" r="4"/>
+          <circle class="arc-dot" cx="200" cy="60" r="4"/>
+          <circle class="arc-dot" cx="290" cy="66" r="4"/>
+          <circle class="arc-dot" cx="380" cy="160" r="4"/>
+        </svg>
+        <img class="arc-sabi" src="img/sabi.webp" alt="" width="72" height="72">
+        <div class="clock">
+          <span class="clock-time" data-clock-time>04.06</span>
+          <span class="clock-label" data-clock-label>Subuh</span>
+        </div>
+      </div>
+
+      <div class="day-panels">
+        <article class="panel" data-time="04.06" data-label="Subuh" data-phase="fajar">
+          <h2>Bangun dengan adzan yang tepat waktu</h2>
+          <p>
+            Jadwal sholat dihitung di HP untuk kotamu, tanpa internet.
+            Pilih rujukan Kemenag atau Muhammadiyah, lalu suara pengingatnya:
+            bunyi biasa, atau adzan Makkah versi pendek dan penuh.
+          </p>
+          <ul>
+            <li>Tanggal Hijriah, puasa sunnah, dan libur nasional dari SKB.</li>
+            <li>Dengan rujukan Muhammadiyah, tanggal Hijriah mengikuti KHGT.</li>
+            <li>Kompas kiblat, dan hitung mundur sholat di status bar.</li>
+            <li>Paket Kristen: saat teduh pagi dan malam, ibadah Minggu, kalender gerejawi.</li>
+          </ul>
+          <figure class="shot">
+            <img src="img/ibadah.webp" alt="Tab Ibadah: Al-Qur'an, Kiblat, Rencana baca, Ramadan, dan daftar tuntunan" width="540" height="575" loading="lazy">
+          </figure>
+        </article>
+
+        <article class="panel" data-time="05.15" data-label="Selepas Subuh" data-phase="fajar">
+          <h2>Bacaan dan tuntunan, lengkap di saku</h2>
+          <p>
+            Al-Qur'an dengan terjemahan Kemenag dan murottal dari lima qari,
+            atau Alkitab Yang Terbuka, 66 kitab. Teksnya tersimpan di
+            aplikasi, jadi bisa dibaca tanpa sinyal.
+          </p>
+          <ul>
+            <li>Tata cara sholat dengan bacaannya, wudhu, dzikir setelah sholat, doa sehari-hari, Asmaul Husna.</li>
+            <li>Doa Bapa Kami, Pengakuan Iman Rasuli, Dasa Titah, doa sehari-hari, ayat penguat.</li>
+            <li>Rencana baca: khatam satu juz sehari, atau Alkitab setahun.</li>
+            <li>Ayat hari ini di Beranda.</li>
+          </ul>
+          <div class="shot-stack">
+            <figure class="shot"><img src="img/sholat.webp" alt="Tata cara sholat: Al-Fatihah dengan teks Arab dan terjemahan" width="540" height="575" loading="lazy"></figure>
+            <figure class="shot"><img src="img/asmaul.webp" alt="Asmaul Husna: nama, arti, dan tulisan Arab" width="540" height="575" loading="lazy"></figure>
+          </div>
+        </article>
+
+        <article class="panel" data-time="07.00" data-label="Pagi" data-phase="siang">
+          <h2>Habit yang memaafkan</h2>
+          <p>
+            Bolong sehari dalam seminggu tidak memutus streak. Sabi lebih
+            peduli kamu kembali besok daripada sempurna hari ini.
+          </p>
+          <ul>
+            <li>Target harian, seperti minum 8 gelas, dengan pengingat.</li>
+            <li>Widget beranda untuk mencentang habit tanpa membuka aplikasi.</li>
+            <li>Tantangan bareng teman lewat kartu progres yang dipindai.</li>
+          </ul>
+          <div class="mock mock-habits" aria-label="Contoh kartu Habit hari ini">
+            <p class="mock-title">Habit hari ini, 2 dari 4</p>
+            <p class="mock-row"><span class="tick done"></span>Sholat 5 waktu<span class="mock-count">5/5</span></p>
+            <p class="mock-row"><span class="tick done"></span>Baca Al-Qur'an</p>
+            <p class="mock-row"><span class="tick part"></span>Minum air<span class="mock-count">6/8 gelas</span></p>
+            <p class="mock-row"><span class="tick"></span>Tidur sebelum 23.00</p>
+          </div>
+        </article>
+
+        <article class="panel" data-time="12.00" data-label="Siang" data-phase="siang">
+          <h2>Latihan yang tahu beban berikutnya</h2>
+          <p>
+            Catat set dan repetisi, simpan rutinitas, dan Sabi menyarankan
+            kapan beban bisa dinaikkan. Ada animasi dan cara melakukan untuk
+            22 gerakan, dari bench press sampai plank.
+          </p>
+          <ul>
+            <li>Timer istirahat yang tampil di status bar.</li>
+            <li>Grafik kemajuan dan rekor tiap gerakan.</li>
+            <li>Keuangan: catatan, anggaran, tagihan, kurs, harga emas, dan zakat.</li>
+          </ul>
+          <figure class="shot">
+            <img src="img/gym.webp" alt="Panduan gerakan push up dengan figur beranimasi" width="540" height="575" loading="lazy">
+          </figure>
+        </article>
+
+        <article class="panel" data-time="15.30" data-label="Sore" data-phase="sore">
+          <h2>Jeda sebentar sebelum sosmed</h2>
+          <p>
+            Saat kamu membuka sosmed, Sabi muncul dengan satu tarikan napas.
+            Sering kali itu cukup untuk mengurungkannya. Waktu sosmed dan
+            game dihitung terpisah, masing-masing dengan batasnya.
+          </p>
+          <ul>
+            <li>Pulau Sabi di atas layar: berapa meter jempolmu sudah scroll.</li>
+            <li>Mode fokus 25, 50, atau 90 menit.</li>
+            <li>Mode tidur dengan jeda yang lebih ketat.</li>
+          </ul>
+          <div class="mock mock-island" aria-label="Contoh pulau Sabi di atas layar">
+            <div class="island">
+              <img src="img/sabi.webp" alt="" width="26" height="26">
+              <span class="island-text">Jempolmu sudah scroll 42 m</span>
+            </div>
+            <p class="mock-title">Sosmed hari ini</p>
+            <p class="mock-big">38 menit dari 2 jam</p>
+            <div class="bar"><span></span></div>
+          </div>
+        </article>
+
+        <article class="panel" data-time="18.00" data-label="Magrib" data-phase="senja">
+          <h2>Tahu yang terjadi di sekitarmu</h2>
+          <p>
+            Gempa, cuaca, peringatan dini cuaca ekstrem dari BMKG, kualitas
+            udara, dan laporan banjir warga. Kartunya hanya muncul saat ada
+            yang penting, bukan umpan berita.
+          </p>
+          <ul>
+            <li>Notifikasi gempa dalam radius yang kamu pilih.</li>
+            <li>Peringatan cuaca ekstrem dicek di latar tiap 30 menit.</li>
+            <li>Halaman Siaga: nomor darurat dan isi tas siaga bencana.</li>
+          </ul>
+          <div class="mock mock-alert" aria-label="Contoh kartu Sekitarmu">
+            <p class="mock-title">Sekitarmu</p>
+            <p class="mock-big">Hujan lebat disertai petir</p>
+            <p class="mock-sub">Sampai pukul 20.00 di kecamatanmu. Sumber: BMKG</p>
+          </div>
+        </article>
+
+        <article class="panel" data-time="21.00" data-label="Malam" data-phase="malam">
+          <h2>Menutup hari dengan tenang</h2>
+          <p>
+            Check-in malam: bagaimana harimu, satu ketukan saja. Di akhir
+            minggu, kilas minggu yang bisa dibagikan.
+          </p>
+          <ul>
+            <li>Statistik habit, ibadah, layar, gym, keuangan, dan mood.</li>
+            <li>Lemari Sabi: warna dan aksesori yang terbuka dari kebiasaan baik.</li>
+            <li>Asisten AI dengan API key milikmu sendiri, hanya kalau kamu mau.</li>
+            <li>Cadangan ke satu file untuk pindah HP.</li>
+          </ul>
+          <figure class="shot">
+            <img src="img/rencana.webp" alt="Halaman Rencana baca dengan pilihan khatam Al-Qur'an dalam 30 hari" width="540" height="575" loading="lazy">
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="packs" aria-labelledby="packs-title">
+      <h2 id="packs-title">Satu Sabi, tiga cara memakainya</h2>
+      <p class="section-lead">Pilih saat pertama membuka aplikasi. Bisa diganti kapan saja di Profil.</p>
+      <div class="pack-grid">
+        <div class="pack">
+          <h3>Islam</h3>
+          <p>Jadwal sholat dan adzan, kalender Hijriah, puasa sunnah, Al-Qur'an dan murottal, tuntunan sholat dan doa, mode Ramadan, tasbih, zakat.</p>
+        </div>
+        <div class="pack">
+          <h3>Kristen</h3>
+          <p>Saat teduh dan ibadah Minggu, kalender gerejawi, Alkitab lengkap, Doa Bapa Kami dan Pengakuan Iman, ayat penguat, rencana baca.</p>
+        </div>
+        <div class="pack">
+          <h3>Tanpa paket ibadah</h3>
+          <p>Habit, gym, waktu layar, keuangan, dan Sekitarmu tetap jalan seperti biasa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="privacy" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">Datamu tinggal di HP</h2>
+      <div class="privacy-cols">
+        <div>
+          <h3>Tidak pernah keluar dari HP</h3>
+          <p>Habit, catatan ibadah, latihan, keuangan, waktu layar, check-in, teman, dan lokasimu. Tidak ada akun, analitik, atau iklan.</p>
+        </div>
+        <div>
+          <h3>Yang diunduh dari internet</h3>
+          <p>Hanya data publik: gempa dan cuaca BMKG, kualitas udara, kurs, harga emas, laporan banjir, murottal, dan pengecekan versi baru di GitHub. Yang dikirim hanya koordinat kota yang kamu pilih, bukan titik GPS-mu.</p>
+        </div>
+        <div>
+          <h3>Hanya kalau kamu minta</h3>
+          <p>Asisten AI memakai API key milikmu dan baru mengirim pesan saat kamu bertanya. Key-nya disimpan terenkripsi di HP.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="data" class="sources" aria-labelledby="data-title">
+      <h2 id="data-title">Sumber data dan lisensi</h2>
+      <p class="section-lead">Semua isi yang tidak dibuat sendiri berasal dari sumber terbuka dan dipakai sesuai lisensinya.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">Data</th><th scope="col">Dipakai untuk</th><th scope="col">Sumber dan lisensi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Teks Al-Qur'an</td><td>Pembaca Al-Qur'an, tuntunan, ayat hari ini</td><td><a href="https://tanzil.net">Tanzil Project</a>, teks Utsmani, CC BY 3.0, tanpa perubahan</td></tr>
+            <tr><td>Terjemahan Al-Qur'an</td><td>Terjemahan di samping ayat</td><td>Kementerian Agama RI, melalui Tanzil</td></tr>
+            <tr><td>Alkitab</td><td>Pembaca Alkitab, tuntunan Kristen, rencana baca</td><td><a href="https://ayt.co">Alkitab Yang Terbuka</a>, © YLSA-AYT, nonkomersial dengan atribusi, melalui <a href="https://ebible.org/indayt/">eBible.org</a></td></tr>
+            <tr><td>Murottal</td><td>Audio per ayat, diunduh saat diputar</td><td><a href="https://everyayah.com">EveryAyah.com</a>, dengan nama qari dan tautan balik</td></tr>
+            <tr><td>Adzan Makkah</td><td>Suara pengingat sholat</td><td>Rekaman 3omar Faruq di <a href="https://commons.wikimedia.org/">Wikimedia Commons</a>, CC BY 3.0</td></tr>
+            <tr><td>Gempa, cuaca, peringatan dini</td><td>Sekitarmu dan notifikasi</td><td><a href="https://data.bmkg.go.id">BMKG</a>, dengan BMKG disebut sebagai sumber</td></tr>
+            <tr><td>Kode wilayah</td><td>Prakiraan cuaca BMKG per kelurahan</td><td>Kepmendagri 100.1.1-6117/2022, melalui <a href="https://github.com/cahyadsn/wilayah">cahyadsn/wilayah</a></td></tr>
+            <tr><td>Kualitas udara</td><td>Kartu Sekitarmu</td><td><a href="https://open-meteo.com">Open-Meteo</a>, CC BY 4.0</td></tr>
+            <tr><td>Laporan banjir</td><td>Kartu Sekitarmu</td><td><a href="https://petabencana.id">PetaBencana.id</a>, CC BY-NC 4.0</td></tr>
+            <tr><td>Kurs rupiah</td><td>Keuangan</td><td><a href="https://www.exchangerate-api.com">Rates by Exchange Rate API</a></td></tr>
+            <tr><td>Harga emas</td><td>Keuangan dan nisab zakat</td><td><a href="https://gold-api.com">gold-api.com</a></td></tr>
+            <tr><td>Libur nasional</td><td>Hari penting</td><td>SKB Menteri tentang hari libur nasional dan cuti bersama</td></tr>
+            <tr><td>Waktu sholat, Hijriah, KHGT</td><td>Jadwal dan kalender</td><td>Dihitung di HP dengan algoritma astronomi Meeus, kriteria Kemenag, Muhammadiyah, dan KHGT</td></tr>
+            <tr><td>Huruf</td><td>Aplikasi dan situs ini</td><td>Plus Jakarta Sans oleh Tokotype, <a href="fonts/PlusJakartaSans-OFL.txt">SIL Open Font License</a></td></tr>
+            <tr><td>Maskot dan animasi gym</td><td>Sabi dan panduan gerakan</td><td>Dibuat sendiri untuk Sabi</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="pasang" class="install" aria-labelledby="install-title">
+      <h2 id="install-title">Pasang Sabi</h2>
+      <ol class="steps">
+        <li>
+          <h3>Unduh APK</h3>
+          <p>Hampir semua HP memakai versi 64-bit. Pilih 32-bit hanya untuk HP lama.</p>
+          <div class="download-row">
+            <a class="button" href="https://github.com/Leuthra/sabi-releases/releases/latest" data-download="arm64-v8a"><span data-download-label>Unduh versi 64-bit</span></a>
+            <a class="button button-quiet" href="https://github.com/Leuthra/sabi-releases/releases/latest" data-download="armeabi-v7a"><span>Unduh versi 32-bit</span></a>
+          </div>
+          <p class="fineprint" data-release-meta-install></p>
+        </li>
+        <li>
+          <h3>Buka file-nya</h3>
+          <p>Kalau Android meminta izin memasang dari browser atau pengelola file, izinkan sekali saja.</p>
+        </li>
+        <li>
+          <h3>Ikuti perkenalan Sabi</h3>
+          <p>Pilih paket ibadah dan kotamu. Izin lain diminta satu per satu, saat fiturnya pertama dipakai.</p>
+        </li>
+      </ol>
+      <div class="install-notes">
+        <p>Versi baru muncul sebagai pemberitahuan di Beranda, dan datamu tetap ada saat memperbarui. Bisa juga lewat <a href="https://obtainium.imranr.dev/">Obtainium</a> dengan alamat repositori ini.</p>
+        <p>Setiap rilis ditandatangani dengan kunci yang sama. Sidik jari sertifikat SHA-256:</p>
+        <code class="fingerprint">AD:42:BA:2B:04:DF:45:DD:A0:5F:63:AF:9E:66:FC:63:B0:BD:1C:E4:68:6A:66:8E:CD:0B:AB:87:FB:0C:C4:E8</code>
+      </div>
+    </section>
+
+    <section class="changelog" aria-labelledby="changelog-title">
+      <h2 id="changelog-title" data-changelog-title>Yang baru</h2>
+      <div class="changelog-body" data-changelog>
+        <p>Catatan rilis ada di <a href="https://github.com/Leuthra/sabi-releases/releases">halaman Releases</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Sabi dibuat oleh Romi untuk dirinya dan teman-temannya. Gratis, tidak dijual.</p>
+    <p>Situs ini memakai <a href="https://gsap.com">GSAP</a> dan Plus Jakarta Sans.</p>
+  </footer>
+
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
+  <script src="vendor/SplitText.min.js" defer></script>
+  <script src="vendor/MotionPathPlugin.min.js" defer></script>
+  <script src="main.js" defer></script>
+</body>
+</html>
