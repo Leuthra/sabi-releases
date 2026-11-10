@@ -27,11 +27,13 @@
    app's home screen. The sky variables are animated as the page scrolls. */
 :root {
   --langit: #1b1d3a;
+  --malam: #0c0d22;
   --bulan: #ffe39a;
   --kabut: #eceef6;
   --nila: #4f56c6;
   --nila-terang: #8f95ef;
   --sheet: rgba(27, 29, 58, 0.86);
+  --card: #23264a;
   --line: rgba(236, 238, 246, 0.14);
   --muted: rgba(236, 238, 246, 0.72);
 
@@ -43,12 +45,15 @@
   --step--1: 0.875rem;
   --step-0: 1.0625rem;
   --step-1: 1.3125rem;
-  --step-2: 1.75rem;
-  --step-3: clamp(2rem, 4.2vw, 3rem);
-  --step-4: clamp(2.6rem, 7vw, 5.25rem);
+  --step-2: clamp(1.5rem, 2.4vw, 1.875rem);
+  --step-3: clamp(2rem, 4.2vw, 3.25rem);
+  --step-4: clamp(2.6rem, 6.4vw, 5.5rem);
   --radius-sheet: 28px;
+  --radius-card: 20px;
   --radius-small: 14px;
-  --content: 72rem;
+  --content: 78rem;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --header: 4.25rem;
 }
 
 *,
@@ -59,7 +64,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: calc(var(--header) + 1rem);
 }
 
 body {
@@ -70,6 +75,7 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 img {
@@ -81,6 +87,11 @@ img {
 a {
   color: var(--bulan);
   text-underline-offset: 0.2em;
+}
+
+button {
+  font: inherit;
+  color: inherit;
 }
 
 :focus-visible {
@@ -109,6 +120,33 @@ h3 {
 
 p {
   margin: 0;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 20;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--bulan);
+  color: var(--langit);
+  font-weight: 700;
+}
+
+.skip:focus {
+  top: 1rem;
+}
+
+.icon {
+  width: 1.1em;
+  height: 1.1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
 }
 
 /* The sky behind the whole page. */
@@ -145,12 +183,20 @@ p {
   left: 0;
   right: 0;
   z-index: 10;
+  height: var(--header);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.9rem clamp(1rem, 4vw, 2.5rem);
+  padding: 0 var(--gutter);
   background: linear-gradient(to bottom, rgba(12, 13, 34, 0.55), transparent);
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.top.is-scrolled {
+  background: rgba(12, 13, 34, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .brand {
@@ -165,7 +211,8 @@ p {
 
 .top nav {
   display: flex;
-  gap: clamp(0.8rem, 2.5vw, 1.8rem);
+  align-items: center;
+  gap: clamp(0.8rem, 2vw, 1.6rem);
   font-size: var(--step--1);
   font-weight: 600;
 }
@@ -182,7 +229,7 @@ p {
 .top .nav-download {
   color: var(--langit);
   background: var(--bulan);
-  padding: 0.35rem 0.9rem;
+  padding: 0.4rem 1rem;
   border-radius: 999px;
 }
 
@@ -190,58 +237,34 @@ p {
   color: var(--langit);
 }
 
-/* Hero */
-.hero {
-  min-height: 100svh;
-  max-width: var(--content);
-  margin: 0 auto;
-  padding: 7rem clamp(1.25rem, 5vw, 3rem) 4rem;
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  align-items: center;
-  gap: 2rem;
-}
-
-.hero h1 {
-  font-size: var(--step-4);
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.02;
-  max-width: 12ch;
-}
-
-.lead {
-  margin-top: 1.5rem;
-  font-size: var(--step-1);
-  line-height: 1.5;
-  color: var(--kabut);
-  max-width: 34ch;
-}
-
-.hero-actions {
-  margin-top: 2.2rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.6rem;
-}
-
+/* Shared pieces */
 .button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   min-height: 3.1rem;
   padding: 0 1.5rem;
+  border: 0;
   border-radius: 999px;
   background: var(--bulan);
   color: var(--langit);
   font-weight: 700;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px -10px rgba(255, 227, 154, 0.7);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
 }
 
 .button-quiet {
@@ -254,9 +277,23 @@ p {
   box-shadow: inset 0 0 0 1.5px var(--kabut);
 }
 
+.button-small {
+  min-height: 2.5rem;
+  padding: 0 1.1rem;
+  font-size: var(--step--1);
+}
+
 .link {
   color: var(--kabut);
   font-weight: 600;
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .fineprint {
@@ -265,164 +302,36 @@ p {
   color: var(--muted);
 }
 
-.hero-moon {
-  display: grid;
-  place-items: center;
+.hero-kicker {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--bulan);
 }
 
-.hero-sabi {
-  width: min(22rem, 70vw);
-  filter: drop-shadow(0 0 60px rgba(255, 227, 154, 0.45));
+.section-head {
+  max-width: 46rem;
 }
 
-/* The day: a sticky sky window with the arc and clock, and panels that
-   scroll past it like the content sheet of the app's home screen. */
-.day {
-  max-width: var(--content);
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem, 5vw, 3rem);
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: clamp(1.5rem, 4vw, 4rem);
-}
-
-.day-sky {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-.arc {
-  width: 100%;
-  max-width: 26rem;
-  overflow: visible;
-}
-
-.arc path {
-  stroke: rgba(255, 255, 255, 0.55);
-  stroke-width: 2;
-  stroke-dasharray: 2 7;
-  stroke-linecap: round;
-}
-
-.arc-dot {
-  fill: rgba(255, 255, 255, 0.9);
-}
-
-.arc-sabi {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4.5rem;
-  filter: drop-shadow(0 0 24px rgba(255, 227, 154, 0.6));
-  will-change: transform;
-}
-
-.clock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.clock-time {
-  font-size: clamp(3.5rem, 9vw, 6.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.clock-label {
-  font-size: var(--step-1);
-  font-weight: 600;
-}
-
-.day-panels {
-  padding: 30svh 0 20svh;
-  display: flex;
-  flex-direction: column;
-  gap: 40svh;
-}
-
-.panel {
-  background: var(--sheet);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: var(--radius-sheet);
-  padding: clamp(1.5rem, 3.5vw, 2.5rem);
-}
-
-.panel h2 {
-  font-size: var(--step-2);
-  max-width: 20ch;
-}
-
-.panel > p {
-  margin-top: 0.9rem;
+.section-lead {
+  margin-top: 0.8rem;
   color: var(--muted);
   max-width: 60ch;
 }
 
-.panel ul {
-  margin: 1.1rem 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.55rem;
-}
-
-.panel li {
-  position: relative;
-  padding-left: 1.5rem;
-  max-width: 60ch;
-}
-
-/* A small crescent instead of a bullet. */
-.panel li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  box-shadow: -3px 0 0 0 var(--bulan);
-  transform: translateX(3px);
-}
-
 .shot {
-  margin: 1.6rem 0 0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px var(--line);
-  max-width: 24rem;
-}
-
-.shot-stack {
-  margin-top: 1.6rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
-}
-
-.shot-stack .shot {
   margin: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--line), 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  background: var(--malam);
 }
 
 /* Product cards rebuilt in HTML for features without a screenshot. */
 .mock {
-  margin-top: 1.6rem;
-  max-width: 24rem;
   padding: 1.1rem 1.2rem;
-  border-radius: 20px;
-  background: #23264a;
-  box-shadow: 0 0 0 1px var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--line), 0 30px 60px -30px rgba(0, 0, 0, 0.6);
 }
 
 .mock-title {
@@ -450,10 +359,34 @@ p {
   margin-top: 0.75rem;
 }
 
+.mock-row.muted {
+  color: var(--muted);
+}
+
 .mock-count {
   margin-left: auto;
   font-size: var(--step--1);
   color: var(--muted);
+}
+
+.gold {
+  color: var(--bulan);
+}
+
+.chip {
+  margin-left: auto;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: var(--bulan);
+  color: var(--langit);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.chip-soft {
+  background: transparent;
+  color: var(--kabut);
+  box-shadow: inset 0 0 0 1.5px var(--line);
 }
 
 .tick {
@@ -495,11 +428,17 @@ p {
   margin-bottom: 1.1rem;
   padding: 0.4rem 0.9rem 0.4rem 0.45rem;
   border-radius: 999px;
-  background: #0c0d22;
+  background: var(--malam);
   font-size: var(--step--1);
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.island-text {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
 .bar {
@@ -518,7 +457,248 @@ p {
   background: var(--bulan);
 }
 
-/* Sections after the day, on the night sky. */
+/* Hero: the words on the left, the app itself on the right. */
+.hero {
+  min-height: 100svh;
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: calc(var(--header) + 3rem) var(--gutter) 4rem;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.hero h1 {
+  margin-top: 0.8rem;
+  font-size: var(--step-4);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 12ch;
+}
+
+.lead {
+  margin-top: 1.5rem;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  max-width: 38ch;
+}
+
+.hero-actions {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.6rem;
+}
+
+.promises {
+  margin: 1.8rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.promises li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(12, 13, 34, 0.35);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.hero-visual {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 30rem);
+  padding-top: 3rem;
+}
+
+/* A phone body around a real screenshot of Beranda. */
+.phone {
+  position: relative;
+  padding: 0.7rem;
+  border-radius: 2.6rem;
+  background: linear-gradient(160deg, #2c2f5a, #10112a);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 60px 120px -40px rgba(0, 0, 0, 0.75),
+    0 0 90px -20px rgba(143, 149, 239, 0.45);
+}
+
+.phone img {
+  border-radius: 2rem;
+}
+
+.hero-sabi {
+  position: absolute;
+  top: -2rem;
+  right: -3rem;
+  width: clamp(7rem, 12vw, 10rem);
+  filter: drop-shadow(0 0 50px rgba(255, 227, 154, 0.5));
+  will-change: transform;
+}
+
+
+/* The day: a sticky sky with the arc and clock, and panels that scroll
+   past it like the content sheet of the app's home screen. */
+.day {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 6rem) var(--gutter) 0;
+}
+
+.day-grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.7fr) 2fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  margin-top: 2rem;
+}
+
+.day-stage {
+  position: sticky;
+  top: var(--header);
+  height: calc(100svh - var(--header));
+  display: flex;
+  align-items: center;
+}
+
+.day-sky {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.arc {
+  width: 100%;
+  max-width: 24rem;
+  overflow: visible;
+}
+
+.arc-track {
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 2;
+  stroke-dasharray: 2 7;
+  stroke-linecap: round;
+}
+
+.arc-line {
+  stroke: var(--bulan);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.arc-dot {
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+.arc-sabi {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4.5rem;
+  filter: drop-shadow(0 0 24px rgba(255, 227, 154, 0.6));
+  will-change: transform;
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.clock-time {
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-label {
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.day-panels {
+  padding: 8svh 0 20svh;
+  display: flex;
+  flex-direction: column;
+  gap: 22svh;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  min-height: 62svh;
+  background: var(--sheet);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius-sheet);
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.panel h3 {
+  font-size: var(--step-2);
+  font-weight: 800;
+  max-width: 20ch;
+}
+
+.panel-text > p {
+  margin-top: 0.9rem;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.panel ul {
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.panel li {
+  position: relative;
+  padding-left: 1.5rem;
+  max-width: 52ch;
+}
+
+/* A small crescent instead of a bullet. */
+.panel li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  box-shadow: -3px 0 0 0 var(--bulan);
+  transform: translateX(3px);
+}
+
+.panel-visual {
+  justify-self: center;
+  width: 100%;
+  max-width: 22rem;
+}
+
+/* Sections after the day */
+.features,
+.try,
 .packs,
 .privacy,
 .sources,
@@ -526,15 +706,478 @@ p {
 .changelog {
   max-width: var(--content);
   margin: 0 auto;
-  padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 5vw, 3rem) 0;
+  padding: clamp(4rem, 10vw, 7rem) var(--gutter) 0;
 }
 
-.section-lead {
-  margin-top: 0.8rem;
+.filters {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter {
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(12, 13, 34, 0.4);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filter:hover {
+  box-shadow: inset 0 0 0 1.5px var(--kabut);
+}
+
+.filter.is-active {
+  background: var(--bulan);
+  color: var(--langit);
+  box-shadow: none;
+}
+
+.filter-count {
+  margin-top: 1rem;
+  font-size: var(--step--1);
   color: var(--muted);
-  max-width: 60ch;
 }
 
+.feature-grid {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.9rem;
+}
+
+.feature {
+  position: relative;
+  padding: 1.2rem 1.25rem 1.3rem;
+  border-radius: var(--radius-card);
+  background: var(--sheet);
+  box-shadow: 0 0 0 1px var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.feature[hidden] {
+  display: none;
+}
+
+/* Each part of the app has its own colour dot. */
+.feature::before {
+  content: "";
+  display: block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-bottom: 0.8rem;
+  border-radius: 50%;
+  background: var(--group, var(--bulan));
+}
+
+.feature[data-group="ibadah"] { --group: #ffe39a; }
+.feature[data-group="habit"] { --group: #8ee3b0; }
+.feature[data-group="layar"] { --group: #8f95ef; }
+.feature[data-group="gym"] { --group: #f2a8c8; }
+.feature[data-group="uang"] { --group: #7fd3f0; }
+.feature[data-group="sekitar"] { --group: #f5b37a; }
+.feature[data-group="lain"] { --group: #c9cbe0; }
+
+.feature h3 {
+  font-size: 1.05rem;
+}
+
+.feature p {
+  margin-top: 0.4rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Try it */
+.try-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.try-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border-radius: var(--radius-sheet);
+  background: var(--sheet);
+  box-shadow: 0 0 0 1px var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.try-hint {
+  margin-top: 0.4rem;
+  color: var(--muted);
+}
+
+.try-note {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.dial-wrap {
+  position: relative;
+  width: min(15rem, 80%);
+  margin: 1.5rem auto 0;
+}
+
+.dial {
+  width: 100%;
+  cursor: grab;
+  touch-action: none;
+  overflow: visible;
+}
+
+.dial:active {
+  cursor: grabbing;
+}
+
+.dial-face {
+  fill: var(--malam);
+  stroke: var(--line);
+  stroke-width: 2;
+  transition: stroke 0.3s ease;
+}
+
+.dial-ticks line {
+  stroke: rgba(236, 238, 246, 0.3);
+  stroke-width: 1.5;
+}
+
+.dial-ticks line.major {
+  stroke: rgba(236, 238, 246, 0.7);
+  stroke-width: 2;
+}
+
+.dial-n,
+.dial-l {
+  fill: var(--kabut);
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.dial-n {
+  fill: #f28d8d;
+}
+
+.needle-gold {
+  fill: var(--bulan);
+}
+
+.kaaba {
+  fill: #2a2a2a;
+  stroke: var(--bulan);
+  stroke-width: 1.5;
+}
+
+.dial-hub {
+  fill: var(--bulan);
+}
+
+/* The phone's own heading, fixed at the top of the dial. */
+.dial-mark {
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 0.55rem solid transparent;
+  border-right: 0.55rem solid transparent;
+  border-top: 0.8rem solid var(--kabut);
+}
+
+.try-qibla.is-aligned .dial-face {
+  stroke: var(--bulan);
+  stroke-width: 3;
+}
+
+.pause-screen {
+  position: relative;
+  margin-top: 1.5rem;
+  min-height: 15rem;
+  border-radius: var(--radius-card);
+  background: var(--malam);
+  box-shadow: inset 0 0 0 1px var(--line);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.fake-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fake-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #f5b37a, #f28dc0 50%, #8f95ef);
+}
+
+.pause-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.2rem;
+  text-align: center;
+  background: rgba(12, 13, 34, 0.94);
+}
+
+.pause-overlay[hidden] {
+  display: none;
+}
+
+.pause-heading {
+  font-weight: 800;
+  font-size: var(--step-1);
+}
+
+.breath {
+  width: 4.5rem;
+  height: 4.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.breath span {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 227, 154, 0.55), rgba(255, 227, 154, 0.08) 70%);
+  box-shadow: 0 0 0 2px rgba(255, 227, 154, 0.5);
+  transform: scale(0.5);
+}
+
+.pause-text {
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.pause-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.tasbih {
+  position: relative;
+  margin: 1.5rem auto 0;
+  width: min(15rem, 80%);
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #2c2f5a, var(--malam) 70%);
+  box-shadow: 0 0 0 1px var(--line), 0 0 60px -20px rgba(255, 227, 154, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.beads {
+  position: absolute;
+  inset: 0;
+}
+
+.bead {
+  position: absolute;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: -0.35rem 0 0 -0.35rem;
+  border-radius: 50%;
+  background: rgba(236, 238, 246, 0.25);
+}
+
+.bead.is-lit {
+  background: var(--bulan);
+  box-shadow: 0 0 10px rgba(255, 227, 154, 0.8);
+}
+
+.tasbih-count {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.tasbih-label {
+  margin-top: 0.4rem;
+  font-size: var(--step--1);
+  color: var(--bulan);
+  font-weight: 600;
+}
+
+.chat {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.chat-q {
+  justify-self: end;
+  max-width: 85%;
+  padding: 0.65rem 1rem;
+  border-radius: 18px 18px 4px 18px;
+  background: var(--bulan);
+  color: var(--langit);
+  font-weight: 600;
+}
+
+.chat-a {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.chat-a p {
+  min-height: 7.5rem;
+  padding: 0.8rem 1rem;
+  border-radius: 18px 18px 18px 4px;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--line);
+  font-size: var(--step--1);
+  line-height: 1.6;
+}
+
+.try-chat .link-button {
+  margin-top: 1rem;
+  align-self: flex-start;
+  font-size: var(--step--1);
+}
+
+/* Coming in 0.7: on wide screens the cards slide sideways while the
+   section stays pinned. */
+.next {
+  margin-top: clamp(4rem, 10vw, 7rem);
+}
+
+.next-pin {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  overflow: hidden;
+}
+
+.next-head {
+  padding-top: 1rem;
+}
+
+.next-track {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  padding-bottom: 2rem;
+}
+
+.next-card {
+  flex: none;
+  width: clamp(16rem, 24vw, 20rem);
+  padding: 1rem 1rem 1.3rem;
+  border-radius: var(--radius-sheet);
+  background: var(--sheet);
+  box-shadow: 0 0 0 1px var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+}
+
+.next-card .shot,
+.next-card .mock {
+  aspect-ratio: 540 / 575;
+}
+
+.next-card .mock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.shot-art {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(to bottom, #0c0d22, #3a2f6b);
+}
+
+.shot-art img {
+  width: 78%;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.8);
+}
+
+.next-card h3 {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.next-card p {
+  margin-top: 0.4rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.mock-countdown {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.widget-times {
+  margin-top: 1rem;
+  padding: 0.6rem 0.4rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.widget-times small {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.widget-times .gold small {
+  color: var(--bulan);
+}
+
+/* Packs and privacy */
 .pack-grid {
   margin-top: 2rem;
   display: grid;
@@ -564,11 +1207,24 @@ p {
   gap: 2rem;
 }
 
+.draw-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  fill: none;
+  stroke: var(--bulan);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Sources */
 .table-wrap {
   margin-top: 2rem;
   overflow-x: auto;
   border-radius: var(--radius-small);
   box-shadow: 0 0 0 1px var(--line);
+  background: rgba(12, 13, 34, 0.35);
 }
 
 table {
@@ -601,28 +1257,33 @@ td:first-child {
   white-space: nowrap;
 }
 
+/* Install */
 .steps {
   margin: 2rem 0 0;
   padding: 0;
   list-style: none;
   counter-reset: step;
   display: grid;
-  gap: 1.8rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
 .steps > li {
   counter-increment: step;
   position: relative;
-  padding-left: 3.6rem;
+  padding: 4rem 1.5rem 1.5rem;
+  border-radius: var(--radius-card);
+  background: var(--sheet);
+  box-shadow: 0 0 0 1px var(--line);
 }
 
 .steps > li::before {
   content: counter(step);
   position: absolute;
-  left: 0;
-  top: -0.2rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  left: 1.5rem;
+  top: 1.3rem;
+  width: 2rem;
+  height: 2rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -634,18 +1295,17 @@ td:first-child {
 .steps p {
   margin-top: 0.35rem;
   color: var(--muted);
-  max-width: 60ch;
 }
 
 .download-row {
   margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
+  gap: 0.6rem;
 }
 
 .install-notes {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   display: grid;
   gap: 0.8rem;
   color: var(--muted);
@@ -677,43 +1337,75 @@ td:first-child {
 .foot {
   max-width: var(--content);
   margin: 0 auto;
-  padding: 5rem clamp(1.25rem, 5vw, 3rem) 3rem;
+  padding: 6rem var(--gutter) 3rem;
   font-size: var(--step--1);
   color: var(--muted);
   display: grid;
+  justify-items: start;
   gap: 0.3rem;
 }
 
-/* Phones: the sky window becomes a band at the top while the day scrolls. */
-@media (max-width: 52rem) {
-  .hero {
+.foot-sabi {
+  margin-bottom: 0.8rem;
+  filter: drop-shadow(0 0 20px rgba(255, 227, 154, 0.5));
+}
+
+/* Tablets and narrow laptops */
+@media (max-width: 64rem) {
+  .panel {
     grid-template-columns: 1fr;
-    padding-top: 6rem;
-    text-align: left;
+    min-height: 0;
   }
 
-  .hero-moon {
+  .panel-visual {
+    justify-self: start;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phones: the sky becomes a band at the top while the day scrolls, and
+   the 0.7 cards scroll sideways by touch. */
+@media (max-width: 52rem) {
+  .top nav a:not(.nav-download) {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: calc(var(--header) + 1.5rem);
+  }
+
+  .hero-visual {
     order: -1;
-    justify-items: start;
+    width: min(100%, 17rem);
+    justify-self: start;
+    padding-top: 1rem;
   }
 
   .hero-sabi {
-    width: 9rem;
+    right: -3.5rem;
+    width: 6.5rem;
   }
 
-  .day {
+  .day-grid {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
-  .day-sky {
-    height: 34svh;
+  .day-stage {
+    top: var(--header);
+    height: auto;
     z-index: 1;
-    padding-top: 3.5rem;
-    gap: 0.2rem;
+    margin: 0 calc(-1 * var(--gutter));
+    padding: 0.5rem var(--gutter) 1rem;
+    background: linear-gradient(to bottom, var(--sky-top), var(--sky-mid) 85%, transparent);
   }
 
   .arc {
-    max-width: 15rem;
+    max-width: 14rem;
   }
 
   .arc-sabi {
@@ -733,7 +1425,30 @@ td:first-child {
 
   .day-panels {
     padding-top: 4svh;
-    gap: 22svh;
+    gap: 8svh;
+  }
+
+  .try-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .next-pin {
+    overflow: visible;
+  }
+
+  .next-track {
+    width: auto;
+    margin-left: calc(-1 * var(--gutter));
+    margin-right: calc(-1 * var(--gutter));
+    padding: 0 var(--gutter) 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .next-card {
+    width: 78vw;
+    scroll-snap-align: center;
   }
 
   .pack-grid,
@@ -754,33 +1469,9 @@ td:first-child {
     scroll-behavior: auto;
   }
 
-  .button {
+  .button,
+  .filter,
+  .dial-face {
     transition: none;
   }
-}
-
-.island-text {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: middle;
-}
-
-@media (max-width: 52rem) {
-  /* The band covers the panels scrolling beneath it with the same sky. */
-  .day-sky {
-    margin: 0 calc(-1 * clamp(1.25rem, 5vw, 3rem));
-    background: linear-gradient(to bottom, var(--sky-top), var(--sky-mid) 85%, transparent);
-  }
-}
-
-/* Once the page scrolls, the header gets its own night backdrop so text
-   passing beneath it stays out of the way. */
-.top {
-  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-.top.is-scrolled {
-  background: rgba(12, 13, 34, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
