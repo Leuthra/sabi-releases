@@ -1,0 +1,90 @@
+# Builds Sabi's Windows notch for testing, on GitHub's Windows machines,
+# where Actions minutes are free for this public repo.
+#
+# Nothing here is published: the source is checked out from the private
+# Leuthra/sabi with a read-only token (secret SABI_SOURCE_TOKEN), and the
+# result is uploaded only as a 7-Zip archive encrypted with a password
+# (secret SABI_ZIP_PASSWORD), file names included, kept for three days.
+name: Windows notch (uji)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch atau commit Leuthra/sabi yang dibangun"
+        default: main
+        required: true
+
+# A newer build makes an older one pointless.
+concurrency:
+  group: windows-notch
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: Leuthra/sabi
+          ref: ${{ inputs.ref }}
+          token: ${{ secrets.SABI_SOURCE_TOKEN }}
+          # Only the files, not the history.
+          fetch-depth: 1
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.9"
+          channel: stable
+          cache: true
+
+      - name: Fetch packages
+        run: flutter pub get
+
+      - name: Build the notch
+        run: flutter build windows --release -t lib/notch/main_notch.dart
+
+      # Flutter apps need the Visual C++ runtime. Most Windows PCs have it,
+      # but shipping its three files beside sabi.exe means none has to be
+      # installed.
+      - name: Bundle the Visual C++ runtime
+        shell: pwsh
+        run: |
+          $out = "build/windows/x64/runner/Release"
+          foreach ($dll in "msvcp140.dll", "vcruntime140.dll", "vcruntime140_1.dll") {
+            Copy-Item "$env:WINDIR/System32/$dll" $out
+          }
+
+      - name: Write the readme
+        shell: pwsh
+        run: |
+          @"
+          Sabi untuk Windows (notch, versi uji)
+
+          1. Salin seluruh folder ini ke laptop, misalnya ke Dokumen\Sabi.
+          2. Buka sabi.exe.
+          3. Kalau muncul "Windows protected your PC", klik "More info",
+             lalu "Run anyway". Ini hanya sekali, karena Sabi belum
+             ditandatangani sertifikat berbayar.
+
+          Sabi muncul sebagai notch di tengah atas layar. Untuk keluar,
+          klik kanan ikon Sabi di system tray, lalu pilih Keluar.
+          "@ | Set-Content "build/windows/x64/runner/Release/BACA-SAYA.txt" -Encoding utf8
+
+      # 7-Zip comes with GitHub's Windows machines. -mhe hides the file
+      # names too; the password stays masked in the log.
+      - name: Encrypt the build
+        shell: pwsh
+        env:
+          ZIP_PASSWORD: ${{ secrets.SABI_ZIP_PASSWORD }}
+        run: |
+          if (-not $env:ZIP_PASSWORD) { throw "Secret SABI_ZIP_PASSWORD belum diisi." }
+          & "$env:ProgramFiles\7-Zip\7z.exe" a -t7z -mhe=on "-p$env:ZIP_PASSWORD" sabi-windows-notch.7z "./build/windows/x64/runner/Release/*" | Out-Null
+          if ($LASTEXITCODE -ne 0) { throw "7-Zip gagal." }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sabi-windows-notch
+          path: sabi-windows-notch.7z
+          retention-days: 3
